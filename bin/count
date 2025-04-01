@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-cat corpus/*.tsv | wc --lines
+pages="$(echo corpus/*.tsv | wc --words)"
+entries="$(cat corpus/*.tsv | wc --lines)"
+
+echo "Pages   : $pages"
+echo "Entries : $entries"
