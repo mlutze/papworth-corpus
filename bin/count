@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+total_pages=1123
 pages="$(echo corpus/*.tsv | wc --words)"
 entries="$(cat corpus/*.tsv | wc --lines)"
+total_entries="$(expr "$entries" "*" "$total_pages" "/" "$pages")"
+completion="$(expr "$pages" "*" 100 "/" "$total_pages")"
 
-echo "Pages   : $pages"
-echo "Entries : $entries"
+echo "Pages    : $pages / $total_pages"
+echo "Entries  : $entries / ~$total_entries"
+echo "Complete : $completion%"
