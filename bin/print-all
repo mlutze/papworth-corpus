@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cat corpus/page-*.tsv \
+| cut -d$'\t' -f1 \
+| awk -v FS='\t' -v OFS='\t' '{ print(length, $0) }' \
+| sort -n \
+| cut -d$'\t' -f2
