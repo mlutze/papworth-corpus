@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+vol1_pages=576
+
+# shuffle all possible pages
+for num in $(seq 3 1125 | shuf); do
+    # get the file corresponding to the page
+    formatted="$(printf "%04d" "$num")"
+    file="corpus/page-$formatted.tsv"
+
+    # skip if it's already in the corpus
+    if [ -e "$file" ]; then
+        continue
+    fi
+
+    # find which volume the file is in
+    volume="ERROR"
+    if [ "$num" -le "$vol1_pages" ]; then
+        volume=1
+    else
+        volume=2
+    fi
+
+    # create the file
+    touch "$file"
+
+    # report the page and volume
+    echo "Volume $volume"
+    echo "Page $formatted"
+
+    # exit because we successfully found a page
+    exit 0
+done
+
+# If we're here then either something went wrong
+# or we've actually completed all the pages.
+>&2 echo "Could not find an incompete page."
+exit 1
